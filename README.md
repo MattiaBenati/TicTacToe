@@ -1,95 +1,104 @@
 # TicTacToe
 
-A Windows console-based Tic-Tac-Toe game developed in C, featuring a fixed console layout, local two-player gameplay, score tracking, and custom executable resources.
+Console-based Tic-Tac-Toe game developed in C with modular source code organization and Windows console customization.
+
+![C](https://img.shields.io/badge/C-Programming-blue)
+![CMake](https://img.shields.io/badge/CMake-Build%20System-green)
+![Windows](https://img.shields.io/badge/Platform-Windows-lightgrey)
+![Console App](https://img.shields.io/badge/Application-Console%20App-informational)
 
 ## Demo
 
-[Watch the demo video](TicTacToe.mp4)
+https://github.com/user-attachments/assets/80936e50-ba60-4018-8a80-40d0f85f8bd0
 
-## Overview
+## What is it?
 
-TicTacToe is a desktop console application that implements the classic 3x3 Tic-Tac-Toe game for two local players. The software allows players to alternate turns using the symbols `X` and `O`, select board positions through numeric input, track the score across multiple rounds, and exit the game through a confirmation screen.
+TicTacToe is a desktop console application that implements the classic Tic-Tac-Toe game for two local players.
 
-The project is organized into separate modules for console configuration, board management, graphics rendering, input handling, and game-state verification. It also includes Windows-specific console customization, such as a fixed console size, centered window positioning, disabled resizing, a custom console title, and an embedded executable icon.
+The software manages the game board, player turns, input validation, win detection, draw detection, and final result visualization directly inside a Windows console interface.
 
-## Main Features
+The project is organized into separate source and header files to keep the game flow, console configuration, input handling, drawing functions, and result verification clearly separated.
 
-- Local two-player Tic-Tac-Toe gameplay
-- Turn-based input for players `X` and `O`
-- Numeric board position selection
-- Remaining-position display during the game
-- Score tracking for both players across multiple rounds
-- Row, column, and diagonal win detection
-- Draw handling when the board is full
-- Exit confirmation screen with final score display
+## Features
+
+- Two-player local gameplay
+- Console-based user interface
+- Turn-based game flow
+- Input validation for player moves
+- Win condition detection
+- Draw condition detection
+- Final result visualization
 - Fixed and centered Windows console window
-- Disabled console resizing, maximize action, quick edit, insert mode, and mouse input
-- Custom executable icon and version metadata through a Windows resource file
-- Prebuilt Windows executable included in the repository
-- Desktop demo video included in the repository
+- Custom executable icon through Windows resource files
+- Modular C source code organization
+
+## Key Technical Aspects
+
+- Modular separation between game flow, input handling, console configuration, drawing functions, and result verification
+- Windows-specific console customization using the Windows API
+- CMake-based build configuration
+- Custom executable icon integration through a Windows resource file
+- Input validation to prevent invalid or repeated moves
+- Clear separation between source files and header files
+
+## Technology Stack
+
+- C
+- CMake
+- Windows API
+- Windows resource file `.rc`
+- CLion or another CMake-compatible IDE
 
 ## Requirements
 
-To run the prebuilt executable:
-
 - Windows operating system
-- `TicTacToe.exe`
+- CMake
+- A C compiler supported by CMake
+- CLion, Visual Studio, or another CMake-compatible development environment
 
-To build the project from source:
+## Quick Start
 
-- Windows operating system
-- CMake 4.0 or later
-- C compiler compatible with the Windows API, such as MinGW
-- IDE with CMake support, such as CLion, or a terminal-based CMake workflow
-
-## Installation
-
-Clone the repository or download the project files:
+### Clone the repository
 
 ```bash
-git clone https://github.com/username/TicTacToe.git
+git clone https://github.com/MattiaBenati/TicTacToe.git
 cd TicTacToe
 ```
 
-Replace `username` with the correct GitHub account name.
+### Build the project
 
-## How to Run
-
-To run the included executable on Windows, open the project folder and launch:
+Generate the build files:
 
 ```bash
-TicTacToe.exe
+cmake -S . -B build
 ```
 
-Alternatively, run the executable from the terminal:
+Build the executable:
 
 ```bash
-./TicTacToe.exe
+cmake --build build
 ```
+
+### Run the application
+
+Run the generated executable from the build directory or directly from the IDE.
 
 ## Usage
 
-After launching the software, the console window opens with a fixed layout and shows the game board, the current score, the remaining available positions, and the current player turn.
+1. Start the application
+2. The console window is configured and displayed
+3. The Tic-Tac-Toe board is shown
+4. Players take turns selecting a cell
+5. The program validates each selected move
+6. The board is updated after every valid move
+7. The game ends when a player wins or when the board is full
+8. The final result is displayed in the console
 
-The player selects a position by typing a number from `1` to `9`:
+## Controls
 
-```text
-7 8 9
-4 5 6
-1 2 3
-```
+Players interact with the game by entering the number of the cell where they want to place their symbol.
 
-The number `0` opens the exit confirmation screen.
-
-During the game:
-
-1. Player `X` starts the round
-2. Players alternate turns
-3. Each player selects one available position
-4. The program checks rows, columns, and diagonals after each move
-5. When a player wins, the score is updated
-6. If all positions are filled without a winner, the round ends as a draw
-7. A new round starts automatically unless the user chooses to exit
+The program accepts only valid moves and prevents players from selecting cells that are already occupied.
 
 ## Project Structure
 
@@ -112,50 +121,27 @@ TicTacToe/
 │   ├── input.c
 │   ├── main.c
 │   └── verifica.c
-├── CMakeLists.txt
-├── TicTacToe.exe
-├── TicTacToe.mp4
-└── README.md
+└── CMakeLists.txt
 ```
 
-## Software Architecture
+## Architecture Overview
 
-The project is divided into focused C modules:
+The project follows a modular C structure, where each source file is responsible for a specific part of the application.
 
-- `main.c`: controls the main game loop, turn management, score tracking, round reset, and program termination
-- `console.c`: configures the Windows console title, input mode, window style, fixed size behavior, and centered position
-- `disegno.c`: allocates, initializes, and releases the 3x3 game board memory
-- `grafica.c`: renders the console interface, borders, score area, available positions, game board, and final result screen
-- `input.c`: reads and validates user input, converts numeric positions into board coordinates, and places the selected symbol
-- `verifica.c`: checks rows, columns, diagonals, and exit confirmation input
-- `resource.rc`: embeds the application icon and version information into the Windows executable
-- Header files in `include/`: expose the functions used across the source modules
-
-## Build Instructions
-
-From the project root, configure and build the project with CMake:
-
-```bash
-cmake -S . -B build
-cmake --build build
-```
-
-The executable will be generated inside the build output directory created by CMake.
-
-The `CMakeLists.txt` file defines the project name through the `PROJECT_NAME` variable, includes all source files, registers the Windows resource file, and adds the `include/` directory to the compiler header search paths.
+- `main.c`: starts the application and manages the main program flow
+- `console.c`: configures the Windows console window behavior and appearance
+- `disegno.c`: manages board drawing and visual output
+- `grafica.c`: manages console graphics and interface elements
+- `input.c`: handles player input and input validation
+- `verifica.c`: checks the game state, win conditions, and draw conditions
+- `include/`: contains the header files used by the source modules
+- `assets/`: contains the application icon and Windows resource file
+- `CMakeLists.txt`: defines the CMake build configuration
 
 ## Output
 
-The software displays a console-based graphical interface containing:
+The software runs entirely inside the Windows console.
 
-- Current score for player `X` and player `O`
-- Remaining available board positions
-- Current player turn
-- Tic-Tac-Toe board
-- Exit confirmation screen
-- Final score and match result when the user exits
+During execution, it displays the game board, the current player turn, validated moves, updated board states, and the final match result.
 
-The repository also contains:
-
-- `TicTacToe.exe`: prebuilt Windows executable
-- `TicTacToe.mp4`: desktop demo video of the software running
+The final output indicates whether one player has won or whether the match ended in a draw.
